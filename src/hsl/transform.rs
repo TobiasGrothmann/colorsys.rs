@@ -1,5 +1,5 @@
 use crate::{ColorTransform, SaturationInSpace};
-use crate::consts::{ALL_MIN, HUE_MAX};
+use crate::consts::{ZERO, HUE_MAX};
 use crate::normalize::bound_hue;
 
 use super::Hsl;
@@ -24,8 +24,8 @@ impl ColorTransform for Hsl {
   }
 
   fn grayscale_simple(&mut self) {
-    self.units.list[0].value = ALL_MIN;
-    self.units.list[1].value = ALL_MIN;
+    self.units.list[0].value = ZERO;
+    self.units.list[1].value = ZERO;
   }
   fn invert(&mut self) {
     let h = (self.units[0] + HUE_MAX * 0.5) % HUE_MAX;

@@ -1,7 +1,7 @@
 #[cfg(not(feature = "std"))]
 use alloc::vec::Vec;
 
-use consts::{ALL_MIN, RATIO_MAX, RGB_UNIT_MAX};
+use consts::{ZERO, RATIO_MAX, RGB_UNIT_MAX};
 
 use crate::{ColorTuple, consts};
 use crate::err::{make_parse_err, ParseError};
@@ -28,7 +28,7 @@ pub fn rgb(s: &str) -> Result<(ColorTuple, Option<f64>), ParseError> {
   for (ind, n) in nums_str.iter().enumerate() {
     if let Ok(num) = n.parse::<f64>() {
       let max = if ind == 4 { RATIO_MAX } else { RGB_UNIT_MAX };
-      if num < ALL_MIN || num > max {
+      if num < ZERO || num > max {
         return make_err();
       }
       nums.push(num)

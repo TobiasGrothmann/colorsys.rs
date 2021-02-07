@@ -172,6 +172,7 @@ mod normalize;
 mod rgb;
 mod ansi;
 mod cmyk;
+mod yiq;
 mod units;
 
 pub mod prelude;

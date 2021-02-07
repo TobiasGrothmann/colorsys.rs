@@ -1,10 +1,10 @@
 
-use super::consts::{ALL_MIN, HUE_MAX, PERCENT_MAX, RATIO_MAX, RGB_UNIT_MAX};
+use super::consts::{ZERO, HUE_MAX, PERCENT_MAX, RATIO_MAX, RGB_UNIT_MAX};
 use crate::common::{f64_round};
 
 fn normalize(val: f64, max: f64) -> f64 {
-  if val < ALL_MIN {
-    return ALL_MIN;
+  if val < ZERO {
+    return ZERO;
   }
   if val > max {
     return max;
@@ -28,7 +28,7 @@ pub fn normalize_ratio(val: f64) -> f64 {
 pub fn bound(r: f64, entire: f64) -> f64 {
   let mut n = r;
   loop {
-    let less = n < ALL_MIN;
+    let less = n < ZERO;
     let bigger = n > entire;
     if !less && !bigger {
       break n;

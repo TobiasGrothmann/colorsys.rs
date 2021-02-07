@@ -1,7 +1,7 @@
 use core::fmt;
 use core::ops::{Add, Sub};
 
-use crate::consts::{ALL_MIN, HUE_MAX, PERCENT_MAX, RATIO_MAX, RGB_UNIT_MAX};
+use crate::consts::{ZERO, HUE_MAX, PERCENT_MAX, RATIO_MAX, RGB_UNIT_MAX};
 
 #[derive(Clone, Copy)]
 pub struct Unit {
@@ -63,8 +63,8 @@ impl Unit {
   }
 
   fn get_restricted(&self, val: f64) -> f64 {
-    if val < ALL_MIN {
-      return ALL_MIN;
+    if val < ZERO {
+      return ZERO;
     } else if &val > self.highest {
       return *self.highest;
     }

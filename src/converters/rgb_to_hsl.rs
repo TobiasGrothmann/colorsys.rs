@@ -1,5 +1,5 @@
 use crate::Rgb;
-use crate::consts::{ALL_MIN, PERCENT_MAX};
+use crate::consts::{ZERO, PERCENT_MAX};
 use crate::hsl::new_hsl_units;
 use crate::units::Units;
 
@@ -12,7 +12,7 @@ pub fn rgb_to_hsl(rgb: &Rgb) -> Units {
   let luminance = (max_plus_min) / 2.0;
 
   if max.eq(&min) {
-    return new_hsl_units(ALL_MIN, ALL_MIN, luminance * PERCENT_MAX);
+    return new_hsl_units(ZERO, ZERO, luminance * PERCENT_MAX);
   }
 
   let max_min_delta = max - min;
@@ -27,7 +27,7 @@ pub fn rgb_to_hsl(rgb: &Rgb) -> Units {
   let hue = match max_unit {
     // red
     0 => {
-      let x = if green < blue { 6.0 } else { ALL_MIN };
+      let x = if green < blue { 6.0 } else { ZERO };
       (green - blue) / max_min_delta + x
     }
     // green

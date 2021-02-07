@@ -6,7 +6,7 @@ use super::Hs;
 use crate::err::{make_parse_err, ParseError};
 use crate::{consts, ColorTuple};
 
-use consts::{ALL_MIN, HUE_MAX, PERCENT_MAX, RATIO_MAX};
+use consts::{ZERO, HUE_MAX, PERCENT_MAX, RATIO_MAX};
 
 fn get_max_by_ind(ind: usize) -> f64 {
   match ind {
@@ -57,7 +57,7 @@ pub fn hsl_hsv_from_str(
   for (ind, n) in nums_str.iter().enumerate() {
     if let Ok(num) = n.parse::<f64>() {
       let max = get_max_by_ind(ind);
-      if num < ALL_MIN || num > max {
+      if num < ZERO || num > max {
         return make_err();
       }
       nums.push(num)
