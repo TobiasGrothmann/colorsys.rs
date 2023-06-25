@@ -1,3 +1,4 @@
+use core::iter::zip;
 use core::ops::{Add, Index, Sub};
 
 pub(crate) use alpha::Alpha;
@@ -28,17 +29,6 @@ impl Units {
     for i in 0..self.len {
       self.list[i].restrict();
     }
-  }
-
-  fn add_sub(&self, other: &Units, is_add: bool) -> Self {
-    let mut new = self.clone();
-    for i in 0..self.len {
-      let a = new.list[i];
-      let b = other.list[i];
-      let x = if is_add { a + b } else { a - b };
-      new.list[i] = x;
-    }
-    new
   }
 
   pub(crate) fn as_ratio(&self) -> Self {
@@ -95,14 +85,22 @@ impl Index<usize> for Units {
 impl<'a> Add<Self> for &'a Units {
   type Output = Units;
   fn add(self, rhs: &'a Units) -> Self::Output {
-    self.add_sub(rhs, true)
+    let mut new = self.clone();
+    for ((left, right), i) in zip(self.list, rhs.list).zip((0..self.len)) {
+      new.list[i] = left + right;
+    }
+    new
   }
 }
 
 impl<'a> Sub<Self> for &'a Units {
   type Output = Units;
   fn sub(self, rhs: &'a Units) -> Self::Output {
-    self.add_sub(rhs, false)
+    let mut new = self.clone();
+    for ((left, right), i) in zip(self.list, rhs.list).zip((0..self.len)) {
+      new.list[i] = left - right;
+    }
+    new
   }
 }
 
