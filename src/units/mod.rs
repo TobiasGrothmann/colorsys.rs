@@ -3,19 +3,18 @@ use core::ops::{Add, Index, Sub};
 pub(crate) use alpha::Alpha;
 pub(crate) use unit::Unit;
 
-use crate::{ApproxEq, DEFAULT_APPROX_EQ_PRECISION};
 use crate::common::approx::approx;
+use crate::{ApproxEq, DEFAULT_APPROX_EQ_PRECISION};
 
-mod unit;
 mod alpha;
 mod into;
 pub mod iter;
+mod unit;
 
 pub trait GetColorUnits {
   fn get_units(&self) -> &Units;
   fn get_units_mut(&mut self) -> &mut Units;
 }
-
 
 #[derive(Clone, PartialEq, Debug)]
 pub struct Units {
@@ -73,9 +72,10 @@ impl Units {
     (result, ind)
   }
 
-
   pub(crate) fn new_ratios(values: &[f64]) -> Units {
-    if values.len() > 4 { panic!("length of units values is more than 4") }
+    if values.len() > 4 {
+      panic!("length of units values is more than 4")
+    }
     let mut ul: [Unit; 4] = Default::default();
     for (ind, v) in values.iter().enumerate() {
       ul[ind].set(*v);
@@ -83,7 +83,6 @@ impl Units {
     Units { len: values.len(), list: ul, alpha: Alpha::default() }
   }
 }
-
 
 impl Index<usize> for Units {
   type Output = f64;
@@ -107,7 +106,6 @@ impl<'a> Sub<Self> for &'a Units {
   }
 }
 
-
 impl ApproxEq<Units> for Units {
   fn approx_eq(&self, other: &Units) -> bool {
     self.approx_eq_clarify(other, DEFAULT_APPROX_EQ_PRECISION)
@@ -125,7 +123,6 @@ impl ApproxEq<Units> for Units {
     true
   }
 }
-
 
 #[cfg(test)]
 mod test {
